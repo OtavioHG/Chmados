@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Mensagens do Chamado{% endblock %}
+
+{% block content %}
+<h1>Mensagens do Chamado - {{ chamado.assunto_do_chamado }}</h1>
+
+<div class="messages">
+    {% for mensagem in chamado.mensagens %}
+        <div class="message">
+            <p><strong>{{ mensagem.remetente.email }}:</strong> {{ mensagem.mensagem }}</p>
+            <small>Enviado em: {{ mensagem.data_envio.strftime('%d/%m/%Y %H:%M:%S') }}</small>
+        </div>
+    {% endfor %}
+</div>
+
+<form method="POST" action="{{ url_for('enviar_mensagem', chamado_id=chamado.id) }}">
+    <div class="form-group">
+        <textarea class="form-control" name="mensagem" rows="3" placeholder="Digite sua mensagem..." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+</form>
+
+{% endblock %}

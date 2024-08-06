@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Meus Chamados{% endblock %}
+
+{% block content %}
+<h1>Meus Chamados</h1>
+
+{% if chamados %}
+    <ul class="list-group">
+        {% for chamado in chamados %}
+        <li class="list-group-item">
+            <h5>{{ chamado.assunto_do_chamado }}</h5>
+            <p><strong>Status:</strong> {{ chamado.status }}</p>
+            <p><strong>Tipo:</strong> {{ chamado.tipo_do_chamado }}</p>
+            <p><strong>Prioridade:</strong> {{ chamado.prioridade_do_chamado }}</p>
+            <p>{{ chamado.descricao_do_chamado }}</p>
+            {% if chamado.arquivo_anexo %}
+            <p><a href="{{ url_for('static', filename=chamado.arquivo_anexo) }}" download>Download Anexo</a></p>
+            {% endif %}
+            <a href="{{ url_for('visualizar_mensagens', chamado_id=chamado.id) }}" class="btn btn-primary">Ver Mensagens</a>
+            <form method="POST" action="{{ url_for('deletar_chamado', chamado_id=chamado.id) }}">
+                <button type="submit" class="btn btn-danger">Apagar Chamado</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Você não possui chamados.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Criar Chamado{% endblock %}
+
+{% block content %}
+<h1>Criar Novo Chamado</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="tipo_pedido">Tipo do Chamado</label>
+        <select class="form-control" id="tipo_pedido" name="tipo_pedido" onchange="updateTipoChamado()">
+            <option value="tecnico">Técnico</option>
+            <option value="presencial">Presencial</option>
+            <option value="outros">Outros</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tipo_do_chamado">Opções do Chamado</label>
+        <select class="form-control" id="tipo_do_chamado" name="tipo_do_chamado">
+            <!-- As opções serão inseridas aqui pelo JavaScript -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="prioridade_do_chamado">Prioridade do Chamado</label>
+        <select class="form-control" id="prioridade_do_chamado" name="prioridade_do_chamado">
+            <option value="1">Baixo</option>
+            <option value="2">Médio</option>
+            <option value="3">Alto</option>
+            <option value="4">Urgente</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="assunto_do_chamado">Assunto do Chamado (máximo 50 caracteres)</label>
+        <input type="text" class="form-control" id="assunto_do_chamado" name="assunto_do_chamado" maxlength="50" oninput="updateAssuntoLength()">
+        <small><span id="assunto_length">0</span>/50 caracteres</small>
+    </div>
+
+    <div class="form-group">
+        <label for="descricao_do_chamado">Descrição do Chamado (máximo 2000 caracteres)</label>
+        <textarea class="form-control" id="descricao_do_chamado" name="descricao_do_chamado" rows="5" maxlength="2000" oninput="updateDescricaoLength()"></textarea>
+        <small><span id="descricao_length">0</span>/2000 caracteres</small>
+    </div>
+
+    <div class="form-group">
+        <label for="arquivo_anexo">Anexar Arquivo (tipos permitidos: txt, pdf, png, jpg, jpeg, gif, zip, mp3, mp4)</label>
+        <input type="file" class="form-control-file" id="arquivo_anexo" name="arquivo_anexo">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Criar Chamado</button>
+</form>
+
+<script>
+    function updateAssuntoLength() {
+        var length = document.getElementById("assunto_do_chamado").value.length;
+        document.getElementById("assunto_length").textContent = length;
+    }
+
+    function updateDescricaoLength() {
+        var text = document.getElementById("descricao_do_chamado").value.replace(/\s/g, '');
+        var length = text.length;
+        document.getElementById("descricao_length").textContent = length;
+    }
+
+    function updateTipoChamado() {
+        var tipoChamado = document.getElementById("tipo_pedido").value;
+        var opcoesChamado = document.getElementById("tipo_do_chamado");
+
+        if (tipoChamado === "tecnico") {
+            opcoesChamado.innerHTML = `
+                <option value="sistema">Sistema</option>
+                <option value="bugs">Bugs</option>
+                <option value="erro">Erro</option>
+                <option value="outros">Outros</option>
+            `;
+        } else if (tipoChamado === "presencial") {
+            opcoesChamado.innerHTML = `
+                <option value="mau funcionamento">Mau Funcionamento</option>
+                <option value="defeito">Defeito</option>
+                <option value="estragado">Estragado</option>
+                <option value="outros">Outros</option>
+            `;
+        } else {
+            opcoesChamado.innerHTML = `
+                <option value="outros">Outros</option>
+            `;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateAssuntoLength();
+        updateDescricaoLength();
+        updateTipoChamado();
+    });
+</script>
+
+{% endblock %}

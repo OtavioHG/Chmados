@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Sistema de Suporte{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="mt-5 mb-4 text-center">Bem-vindo ao Sistema de Suporte</h1>
+            {% if current_user.is_authenticated %}
+            <p class="text-center">Olá, {{ current_user.email }}!</p>
+            {% else %}
+            <p class="text-center">Faça <a href="{{ url_for('login') }}">login</a> ou <a href="{{ url_for('registro') }}">registre-se</a> para começar.</p>
+            {% endif %}
+            {% if message %}
+            <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+            <div class="text-center">
+                <a href="{{ url_for('login') }}" class="btn btn-primary mr-2">Login</a>
+                <a href="{{ url_for('registro') }}" class="btn btn-success">Registro</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
