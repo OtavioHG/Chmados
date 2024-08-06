@@ -1,0 +1,5 @@
+1 - Ter SQLite instalado
+2 - Você vai precisar do Python 2.5 ou superior
+3 - flask (py -m pip install Flask) instale outras bibliotecas que forem necessária para usar
+
+Vai ser criado a pasta para armazenar fotos é o banco de dados automática, ente quando iniciar a aplicação 
